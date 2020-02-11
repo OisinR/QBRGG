@@ -16,8 +16,7 @@ public class stere : MonoBehaviour
     public float speed = 0;
 
     public bool seekEnabled = false;
-    public Vector3 target;
-    public Transform targetTransform;
+
 
     public bool arriveEnabled = false;
     public float slowingDistance = 10;
@@ -34,8 +33,11 @@ public class stere : MonoBehaviour
     public Vector3 PlayerSteering()
     {
         Vector3 f = Vector3.zero;
+        if(frame)
+        {
+            f += transform.forward * playerForce * 20;
+        }
 
-        //f += Input.GetAxis("Vertical") * transform.forward * playerForce;
 
         Vector3 projectedRight = transform.right;
         projectedRight.y = 0;
@@ -47,11 +49,19 @@ public class stere : MonoBehaviour
         return f;
     }
 
+    public float thrust = 30.0f;
+
+    Rigidbody rb;
+    int button;
+    bool rt, lt;
+    bool frame, go;
+    Vector3 movement;
+
+
+
     public void OnDrawGizmos()
     {
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(target, 0.1f);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + acceleration);
@@ -59,8 +69,7 @@ public class stere : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position + velocity);
 
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(targetTransform.position, slowingDistance);
+
     }
 
 
@@ -75,19 +84,56 @@ public class stere : MonoBehaviour
         return force;
     }
 
-    // Update is called once per frame
+    void Movement()
+    {
+        if (button == 0)
+        {
+            if (Input.GetButton("Right Button"))
+            {
+                if (Input.GetButton("Left Button"))
+                {
+                    return;
+                }
+                Debug.Log(1);
+                if (Input.GetAxis("Right Trigger") == 1)
+                {
+
+                    frame = true;
+                    Debug.Log(2);
+                    button++;
+                }
+            }
+        }
+        if (button == 1)
+        {
+            if (Input.GetButton("Left Button"))
+            {
+                if (Input.GetButton("Right Button"))
+                {
+                    return;
+                }
+                Debug.Log(3);
+                if (Input.GetAxis("Left Trigger") == 1)
+                {
+                    frame = true;
+                    Debug.Log(4);
+                    button = 0;
+                }
+            }
+        }
+    }
+
+
     void Update()
     {
-        if (targetTransform != null)
-        {
-            target = targetTransform.position;
-        }
+        frame = false;
+        Movement();
         force = CalculateForce();
         acceleration = force / mass;
         velocity += acceleration * Time.deltaTime;
 
-        //transform.position += velocity * Time.deltaTime;
-        //speed = velocity.magnitude;
+        transform.position += velocity * Time.deltaTime;
+        speed = velocity.magnitude;
         if (speed > 0)
         {
             Vector3 tempUp = Vector3.Lerp(transform.up, Vector3.up + (acceleration * banking), Time.deltaTime * 1f);

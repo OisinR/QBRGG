@@ -9,8 +9,8 @@ public class move : MonoBehaviour
     Rigidbody rb;
     int button;
     bool rt, lt;
-
-   
+    bool frame;
+    Vector3 movement;
 
     void Start()
     {
@@ -23,6 +23,8 @@ public class move : MonoBehaviour
 
 	private void Update()
     {
+        frame = false;
+
         {
             //Debug.Log(Input.GetAxis("Right Trigger"));
             /*
@@ -56,7 +58,9 @@ public class move : MonoBehaviour
                 Debug.Log(1);
                 if (Input.GetAxis("Right Trigger") == 1)
                 {
-                    rb.AddForce(transform.forward * thrust);
+
+                    frame = true;
+                    //rb.AddForce(transform.forward * thrust);
                     Debug.Log(2);
                     button++;
                 }
@@ -79,7 +83,8 @@ public class move : MonoBehaviour
                 Debug.Log(3);
                 if (Input.GetAxis("Left Trigger") == 1)
                 {
-                    rb.AddForce(transform.forward * thrust);
+                    frame = true;
+                    //rb.AddForce(transform.forward * thrust);
                     Debug.Log(4);
                     button = 0;
                 }
@@ -95,8 +100,20 @@ public class move : MonoBehaviour
                 button = 0;
             }
         }*/
-    }
 
+        movement = Vector3.forward;
+    }
+    public int soee;
+
+    private void FixedUpdate()
+    {
+        if(frame)
+        {
+
+
+            rb.velocity = rb.velocity + movement * soee * Time.fixedDeltaTime;
+        }
+    }
 
 
 }
