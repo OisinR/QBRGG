@@ -147,9 +147,9 @@ public class stere : MonoBehaviour
         {
             rb.AddTorque(transform.up * 5);
         }
-        if (transform.rotation.z < 15)
+        if (transform.rotation.z < -15)
         {
-            //rb.AddTorque(transform.up * 5);
+            rb.AddTorque(transform.up * 5);
         }
     }
 }
