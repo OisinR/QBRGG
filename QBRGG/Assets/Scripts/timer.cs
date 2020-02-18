@@ -6,26 +6,30 @@ using UnityEngine.UI;
 public class timer : MonoBehaviour
 {
     public Text time, best;
-
+    public static bool stop;
 
 	void Start()
     {
+        stop = false;
         time.text = "" + System.Math.Round(PlayerPrefs.GetFloat("best"));
     }
 
 
 
 
-	private void Update()
+    private void Update()
     {
-        time.text = "" + System.Math.Round(Time.timeSinceLevelLoad, 2);
-
-        if(Time.timeSinceLevelLoad > PlayerPrefs.GetFloat("best"))
+        if (!stop)
         {
-            PlayerPrefs.SetFloat("best", Time.timeSinceLevelLoad);
-        }
+            time.text = "" + System.Math.Round(Time.timeSinceLevelLoad, 2);
 
-        best.text = "" + System.Math.Round(Time.timeSinceLevelLoad, 2);
+            if (Time.timeSinceLevelLoad > PlayerPrefs.GetFloat("best"))
+            {
+                PlayerPrefs.SetFloat("best", Time.timeSinceLevelLoad);
+            }
+
+            best.text = "" + System.Math.Round(Time.timeSinceLevelLoad, 2);
+        }
     }
 
 

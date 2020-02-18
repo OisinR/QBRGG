@@ -6,6 +6,7 @@ TagManager:
   tags:
   - checkpoint
   - Player2
+  - Win
   layers:
   - Default
   - TransparentFX
