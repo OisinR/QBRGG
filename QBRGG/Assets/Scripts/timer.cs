@@ -11,7 +11,8 @@ public class timer : MonoBehaviour
 	void Start()
     {
         stop = false;
-        time.text = "" + System.Math.Round(PlayerPrefs.GetFloat("best"));
+        time.text = "0.00";
+        best.text = "" + System.Math.Round(PlayerPrefs.GetFloat("best"), 2);
     }
 
 
@@ -29,7 +30,7 @@ public class timer : MonoBehaviour
                 PlayerPrefs.SetFloat("best", Time.timeSinceLevelLoad);
             }
 
-            best.text = "" + System.Math.Round(Time.timeSinceLevelLoad, 2);
+            best.text = "" + System.Math.Round(PlayerPrefs.GetFloat("best"), 2);
         }
     }
 
