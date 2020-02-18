@@ -19,6 +19,7 @@ public class timer : MonoBehaviour
 
     private void Update()
     {
+        if (!stere.canGo) { return; }
         if (!stop)
         {
             time.text = "" + System.Math.Round(Time.timeSinceLevelLoad, 2);

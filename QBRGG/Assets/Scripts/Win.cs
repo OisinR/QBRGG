@@ -7,7 +7,8 @@ public class Win : MonoBehaviour
     public Text winText;
     bool won;
     public GameObject holder;
-
+    public AudioSource speaker, speaker2;
+    public AudioClip applause;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player" && !won)
@@ -17,6 +18,8 @@ public class Win : MonoBehaviour
                 holder.SetActive(true);
                 winText.text = "Player 1 Wins!";
                 timer.stop = true;
+                speaker.volume = speaker.volume / 2;
+                speaker2.PlayOneShot(applause);
                 won = true;
             }
 
@@ -29,6 +32,8 @@ public class Win : MonoBehaviour
                 holder.SetActive(true);
                 winText.text = "Player 2 Wins!";
                 timer.stop = true;
+                speaker.volume = speaker.volume / 2;
+                speaker2.PlayOneShot(applause);
                 won = true;
             }
         }
