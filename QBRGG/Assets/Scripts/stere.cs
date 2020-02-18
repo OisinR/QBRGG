@@ -9,7 +9,7 @@ public class stere : MonoBehaviour
     public Vector3 force = Vector3.zero;
     public Rigidbody rb;
 
-
+    public bool player1 = true;
     public float mass = 1.0f;
 
     public float maxSpeed = 5;
@@ -44,9 +44,15 @@ public class stere : MonoBehaviour
         Vector3 projectedRight = transform.right;
         projectedRight.y = 0;
         projectedRight.Normalize();
-
-        f += Input.GetAxis("Horizontal") * projectedRight * 0.2f;
-
+        if (player1)
+        {
+            f += Input.GetAxis("HorizontalP1") * projectedRight * 0.2f;
+            //Debug.Log(234234);
+        }
+        else
+        {
+            f += Input.GetAxis("HorizontalP2") * projectedRight * 0.2f;
+        }
 
         return f;
     }
@@ -88,38 +94,80 @@ public class stere : MonoBehaviour
 
     void Movement()
     {
-        if (button == 0)
+        if (player1)
         {
-            if (Input.GetButton("Right Button"))
+            if (button == 0)
             {
-                if (Input.GetButton("Left Button"))
+                if (Input.GetButton("Right ButtonP1"))
                 {
-                    return;
-                }
-                Debug.Log(1);
-                if (Input.GetAxis("Right Trigger") == 1)
-                {
+                    if (Input.GetButton("Left ButtonP1"))
+                    {
+                        return;
+                    }
+                    //Debug.Log(1);
+                    if (Input.GetAxis("Right TriggerP1") == 1)
+                    {
 
-                    frame = true;
-                    Debug.Log(2);
-                    button++;
+                        frame = true;
+                        //Debug.Log(2);
+                        button++;
+                    }
+                }
+            }
+            if (button == 1)
+            {
+                if (Input.GetButton("Left ButtonP1"))
+                {
+                    if (Input.GetButton("Right ButtonP1"))
+                    {
+                        return;
+                    }
+                    //Debug.Log(3);
+                    if (Input.GetAxis("Left TriggerP1") == 1)
+                    {
+                        frame = true;
+                        //Debug.Log(4);
+                        button = 0;
+                    }
                 }
             }
         }
-        if (button == 1)
+        else
         {
-            if (Input.GetButton("Left Button"))
+
+            if (button == 0)
             {
-                if (Input.GetButton("Right Button"))
+                if (Input.GetButton("Right ButtonP2"))
                 {
-                    return;
+                    if (Input.GetButton("Left ButtonP2"))
+                    {
+                        return;
+                    }
+                    //Debug.Log(1);
+                    if (Input.GetAxis("Right TriggerP2") == 1)
+                    {
+
+                        frame = true;
+                        //Debug.Log(2);
+                        button++;
+                    }
                 }
-                Debug.Log(3);
-                if (Input.GetAxis("Left Trigger") == 1)
+            }
+            if (button == 1)
+            {
+                if (Input.GetButton("Left ButtonP2"))
                 {
-                    frame = true;
-                    Debug.Log(4);
-                    button = 0;
+                    if (Input.GetButton("Right ButtonP2"))
+                    {
+                        return;
+                    }
+                    //Debug.Log(3);
+                    if (Input.GetAxis("Left TriggerP2") == 1)
+                    {
+                        frame = true;
+                        //Debug.Log(4);
+                        button = 0;
+                    }
                 }
             }
         }
@@ -138,7 +186,7 @@ public class stere : MonoBehaviour
         speed = velocity.magnitude;
         if (speed > 0)
         {
-            Vector3 tempUp = Vector3.Lerp(transform.up, Vector3.up + (acceleration * banking / 2), Time.deltaTime * 1f);
+            Vector3 tempUp = Vector3.Lerp(transform.up, Vector3.up + (acceleration * banking), Time.deltaTime * 1f);
             transform.LookAt(transform.position + velocity, tempUp);
             //transform.forward = velocity;
             velocity -= (damping * velocity * Time.deltaTime);
@@ -147,11 +195,11 @@ public class stere : MonoBehaviour
         }
         if (transform.rotation.z > 10)
         {
-            rb.AddTorque(Vector3.forward * transform.rotation.z);
+            rb.AddTorque(Vector3.forward * transform.rotation.z/1.5f);
         }
         if (transform.rotation.z < -10)
         {
-            rb.AddTorque(Vector3.forward * -transform.rotation.z);
+            rb.AddTorque(Vector3.forward * -transform.rotation.z/1.5f);
         }
     }
 }
