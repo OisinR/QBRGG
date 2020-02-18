@@ -37,7 +37,7 @@ public class stere : MonoBehaviour
         Vector3 f = Vector3.zero;
         if(frame)
         {
-            f += transform.forward * playerForce * 20;
+            f += transform.forward * playerForce * 40;
         }
 
 
@@ -138,18 +138,20 @@ public class stere : MonoBehaviour
         speed = velocity.magnitude;
         if (speed > 0)
         {
-            Vector3 tempUp = Vector3.Lerp(transform.up, Vector3.up + (acceleration * banking), Time.deltaTime * 1f);
+            Vector3 tempUp = Vector3.Lerp(transform.up, Vector3.up + (acceleration * banking / 2), Time.deltaTime * 1f);
             transform.LookAt(transform.position + velocity, tempUp);
             //transform.forward = velocity;
             velocity -= (damping * velocity * Time.deltaTime);
+
+            
         }
-        if (transform.rotation.z > 15)
+        if (transform.rotation.z > 10)
         {
-            rb.AddTorque(transform.up * 5);
+            rb.AddTorque(Vector3.forward * transform.rotation.z);
         }
-        if (transform.rotation.z < 15)
+        if (transform.rotation.z < -10)
         {
-            //rb.AddTorque(transform.up * 5);
+            rb.AddTorque(Vector3.forward * -transform.rotation.z);
         }
     }
 }
