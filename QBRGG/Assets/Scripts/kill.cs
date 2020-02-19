@@ -19,9 +19,15 @@ public class kill : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<respawn>().dead = true;
+        }
+
+        if (collision.gameObject.tag == "Player2")
         {
             collision.gameObject.GetComponent<respawn>().dead = true;
         }
     }
 }
+

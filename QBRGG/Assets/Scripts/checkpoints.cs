@@ -14,12 +14,4 @@ public class checkpoints : MonoBehaviour
     }
 
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "checkpoint")
-        {
-            index++;
-        }
-    }
 }

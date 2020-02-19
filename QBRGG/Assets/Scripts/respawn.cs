@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class respawn : MonoBehaviour
 {
-
+    Rigidbody rb;
     public bool dead;
 
     checkpoints checkpointsScript;
@@ -12,6 +12,7 @@ public class respawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         checkpointsScript = GetComponent<checkpoints>();   
     }
 
@@ -19,14 +20,17 @@ public class respawn : MonoBehaviour
     void Update()
     {
 
-        if(transform.position.y < -200)
+        if(transform.position.y < -50)
         {
             dead = true;
         }
         if(dead)
         {
-            transform.position = checkpointsScript.checkpoint[checkpointsScript.index].transform.position;
-
+            transform.position = new Vector3(checkpointsScript.checkpoint[checkpointsScript.index -1].transform.position.x, checkpointsScript.checkpoint[checkpointsScript.index - 1].transform.position.y +3, checkpointsScript.checkpoint[checkpointsScript.index - 1].transform.position.z);
+            transform.rotation = Quaternion.identity;//checkpointsScript.checkpoint[checkpointsScript.index - 1].transform.localRotation;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            dead = false;
         }
     }
 }

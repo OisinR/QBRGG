@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class stere : MonoBehaviour
 {
+    public static bool canGo;
+
     public  Vector3 velocity = new Vector3(0.6f, 0, 0.1f);
     public Vector3 acceleration = Vector3.zero;
     public Vector3 force = Vector3.zero;
@@ -31,13 +33,16 @@ public class stere : MonoBehaviour
 
     public float damping = 0.1f;
 
-
+    private void Start()
+    {
+        canGo = false;
+    }
     public Vector3 PlayerSteering()
     {
         Vector3 f = Vector3.zero;
         if(frame)
         {
-            f += transform.forward * playerForce * 40;
+            f += transform.forward * playerForce * 80;
         }
 
 
@@ -176,6 +181,7 @@ public class stere : MonoBehaviour
 
     void Update()
     {
+        if (!canGo) { return; }
         frame = false;
         Movement();
         force = CalculateForce();
@@ -186,7 +192,7 @@ public class stere : MonoBehaviour
         speed = velocity.magnitude;
         if (speed > 0)
         {
-            Vector3 tempUp = Vector3.Lerp(transform.up, Vector3.up + (acceleration * banking), Time.deltaTime * 1f);
+            Vector3 tempUp = Vector3.Lerp(transform.up, Vector3.up + (acceleration * banking /2), Time.deltaTime * 1f);
             transform.LookAt(transform.position + velocity, tempUp);
             //transform.forward = velocity;
             velocity -= (damping * velocity * Time.deltaTime);
