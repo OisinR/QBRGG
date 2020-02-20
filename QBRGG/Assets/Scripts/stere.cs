@@ -33,8 +33,10 @@ public class stere : MonoBehaviour
 
     public float damping = 0.1f;
 
+    Animator anim;
     private void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         canGo = false;
     }
     public Vector3 PlayerSteering()
@@ -158,6 +160,7 @@ public class stere : MonoBehaviour
             {
                 if (Input.GetButton("Right ButtonP1"))
                 {
+                    anim.SetInteger("animplay", 1);
                     if (Input.GetButton("Left ButtonP1"))
                     {
                         return;
@@ -165,7 +168,7 @@ public class stere : MonoBehaviour
                     //Debug.Log(1);
                     if (Input.GetAxis("Right TriggerP1") == 1)
                     {
-
+                        anim.SetInteger("animplay", 2);
                         frame = true;
                         //Debug.Log(2);
                         button++;
@@ -176,6 +179,7 @@ public class stere : MonoBehaviour
             {
                 if (Input.GetButton("Left ButtonP1"))
                 {
+                    anim.SetInteger("animplay", 3);
                     if (Input.GetButton("Right ButtonP1"))
                     {
                         return;
@@ -183,6 +187,7 @@ public class stere : MonoBehaviour
                     //Debug.Log(3);
                     if (Input.GetAxis("Left TriggerP1") == 1)
                     {
+                        anim.SetInteger("animplay", 0);
                         frame = true;
                         //Debug.Log(4);
                         button = 0;
