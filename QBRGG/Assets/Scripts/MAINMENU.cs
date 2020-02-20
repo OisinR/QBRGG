@@ -8,14 +8,14 @@ public class MAINMENU : MonoBehaviour
 
     public void LoadLevel()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 0);
-        StartCoroutine(LetTheBellRing());
+        SceneManager.LoadScene("_Main");
+        //StartCoroutine(LetTheBellRing());
     }
 
-    IEnumerator LetTheBellRing()
+   /* IEnumerator LetTheBellRing()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.1f);
         SceneManager.LoadScene("_Main");
-    }
+    }*/
 
 }
