@@ -6,11 +6,11 @@ public class stere : MonoBehaviour
 {
     public static bool canGo;
 
-    public  Vector3 velocity = new Vector3(0.6f, 0, 0.1f);
+    public Vector3 velocity = new Vector3(0.6f, 0, 0.1f);
     public Vector3 acceleration = Vector3.zero;
     public Vector3 force = Vector3.zero;
     public Rigidbody rb;
-
+    public bool boosted,slowed,reverse;
     public bool player1 = true;
     public float mass = 1.0f;
 
@@ -33,16 +33,31 @@ public class stere : MonoBehaviour
 
     public float damping = 0.1f;
 
+    Animator anim;
     private void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         canGo = false;
     }
     public Vector3 PlayerSteering()
     {
         Vector3 f = Vector3.zero;
-        if(frame)
+        if (frame)
         {
-            f += transform.forward * playerForce * 80;
+            Debug.Log(1);
+            if (boosted)
+            {
+                f += transform.forward * playerForce * 100;
+            }
+            if(slowed)
+            {
+                f += transform.forward * playerForce * 20;
+            }
+            else
+            {
+                Debug.Log(2);
+                f += transform.forward * playerForce * 60;
+            }
         }
 
 
@@ -51,12 +66,12 @@ public class stere : MonoBehaviour
         projectedRight.Normalize();
         if (player1)
         {
-            f += Input.GetAxis("HorizontalP1") * projectedRight * 0.2f;
+            f += Input.GetAxis("HorizontalP1") * projectedRight * 2.4f;
             //Debug.Log(234234);
         }
         else
         {
-            f += Input.GetAxis("HorizontalP2") * projectedRight * 0.2f;
+            f += Input.GetAxis("HorizontalP2") * projectedRight * 2.4f;
         }
 
         return f;
@@ -101,10 +116,51 @@ public class stere : MonoBehaviour
     {
         if (player1)
         {
-            if (button == 0)
+            if(reverse)
+            {
+                
+                if (button == 0)
+                {
+                    if (Input.GetAxis("Right TriggerP1") == 1)
+                    {
+                        Debug.Log(3);
+                        if (Input.GetButton("Left ButtonP1"))
+                        {
+                            return;
+                        }
+                        //Debug.Log(1);
+                        if (Input.GetButton("Right ButtonP1"))
+                        {
+
+                            frame = true;
+                            //Debug.Log(2);
+                            button++;
+                        }
+                    }
+                }
+                if (button == 1)
+                {
+                    if (Input.GetAxis("Left TriggerP1") == 1)
+                    {
+                        if (Input.GetButton("Right ButtonP1"))
+                        {
+                            return;
+                        }
+                        //Debug.Log(3);
+                        if (Input.GetButton("Left ButtonP1"))
+                        {
+                            frame = true;
+                            //Debug.Log(4);
+                            button = 0;
+                        }
+                    }
+                }
+            }
+            if (button == 0 && !reverse)
             {
                 if (Input.GetButton("Right ButtonP1"))
                 {
+                    anim.SetInteger("animplay", 1);
                     if (Input.GetButton("Left ButtonP1"))
                     {
                         return;
@@ -112,7 +168,7 @@ public class stere : MonoBehaviour
                     //Debug.Log(1);
                     if (Input.GetAxis("Right TriggerP1") == 1)
                     {
-
+                        anim.SetInteger("animplay", 2);
                         frame = true;
                         //Debug.Log(2);
                         button++;
@@ -123,6 +179,7 @@ public class stere : MonoBehaviour
             {
                 if (Input.GetButton("Left ButtonP1"))
                 {
+                    anim.SetInteger("animplay", 3);
                     if (Input.GetButton("Right ButtonP1"))
                     {
                         return;
@@ -130,6 +187,7 @@ public class stere : MonoBehaviour
                     //Debug.Log(3);
                     if (Input.GetAxis("Left TriggerP1") == 1)
                     {
+                        anim.SetInteger("animplay", 0);
                         frame = true;
                         //Debug.Log(4);
                         button = 0;
@@ -139,7 +197,44 @@ public class stere : MonoBehaviour
         }
         else
         {
+            if (reverse)
+            {
+                if (button == 0)
+                {
+                    if (Input.GetButton("Right ButtonP2"))
+                    {
+                        if (Input.GetButton("Right ButtonP2"))
+                        {
+                            return;
+                        }
+                        //Debug.Log(1);
+                        if (Input.GetAxis("Left TriggerP2") == 1)
+                        {
 
+                            frame = true;
+                            //Debug.Log(2);
+                            button++;
+                        }
+                    }
+                }
+                if (button == 1)
+                {
+                    if (Input.GetButton("Left ButtonP2"))
+                    {
+                        if (Input.GetButton("Left ButtonP2"))
+                        {
+                            return;
+                        }
+                        //Debug.Log(3);
+                        if (Input.GetAxis("Right TriggerP2") == 1)
+                        {
+                            frame = true;
+                            //Debug.Log(4);
+                            button = 0;
+                        }
+                    }
+                }
+            }
             if (button == 0)
             {
                 if (Input.GetButton("Right ButtonP2"))
@@ -179,7 +274,7 @@ public class stere : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         if (!canGo) { return; }
         frame = false;
