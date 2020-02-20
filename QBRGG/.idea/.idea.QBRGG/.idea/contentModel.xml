@@ -20,9 +20,11 @@
           <e p="checkpoints.cs" t="Include" />
           <e p="checkpointsScene.cs" t="Include" />
           <e p="countdown.cs" t="Include" />
+          <e p="Items.cs" t="Include" />
           <e p="kill.cs" t="Include" />
           <e p="MAINMENU.cs" t="Include" />
           <e p="move.cs" t="Include" />
+          <e p="pickup.cs" t="Include" />
           <e p="reset.cs" t="Include" />
           <e p="respawn.cs" t="Include" />
           <e p="spin.cs" t="Include" />
