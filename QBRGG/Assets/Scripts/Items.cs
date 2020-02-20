@@ -15,6 +15,7 @@ public class Items : MonoBehaviour
     {
         if(other.gameObject.tag == "Player" || other.gameObject.tag == "Player2")
         {
+            other.gameObject.GetComponent<pickup>().UI[other.gameObject.GetComponent<pickup>().index].SetActive(false);
             other.gameObject.GetComponent<pickup>().index = num;
             Destroy(gameObject);
         }

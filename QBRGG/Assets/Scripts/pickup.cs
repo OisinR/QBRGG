@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class pickup : MonoBehaviour
 {
+    public GameObject[] UI;
+
     public GameObject target;
     public int index;
     public GameObject mud;
@@ -48,27 +50,34 @@ public class pickup : MonoBehaviour
 
     void Update()
     {
+        UI[index].SetActive(true);
+
+
         if (Player1)
         {
             if (Input.GetButtonDown("A ButtonP1") && index != 0)
             {
                 if (index == 1)
                 {
+                    UI[index].SetActive(false);
                     StartCoroutine(Mud());
                     index = 0;
                 }
                 if (index == 2)
                 {
+                    UI[index].SetActive(false);
                     StartCoroutine(Speed());
                     index = 0;
                 }
                 if (index == 3)
                 {
+                    UI[index].SetActive(false);
                     StartCoroutine(Slow());
                     index = 0;
                 }
                 if (index == 4)
                 {
+                    UI[index].SetActive(false);
                     StartCoroutine(Reverse());
                     index = 0;
                 }
@@ -81,21 +90,25 @@ public class pickup : MonoBehaviour
             {
                 if (index == 1)
                 {
+                    UI[index].SetActive(false);
                     StartCoroutine(Mud());
                     index = 0;
                 }
                 if (index == 2)
                 {
+                    UI[index].SetActive(false);
                     StartCoroutine(Speed());
                     index = 0;
                 }
                 if (index == 3)
                 {
+                    UI[index].SetActive(false);
                     StartCoroutine(Slow());
                     index = 0;
                 }
                 if (index == 4)
                 {
+                    UI[index].SetActive(false);
                     StartCoroutine(Reverse());
                     index = 0;
                 }
