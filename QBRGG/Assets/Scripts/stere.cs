@@ -51,12 +51,12 @@ public class stere : MonoBehaviour
         projectedRight.Normalize();
         if (player1)
         {
-            f += Input.GetAxis("HorizontalP1") * projectedRight * 0.2f;
+            f += Input.GetAxis("HorizontalP1") * projectedRight * 2.4f;
             //Debug.Log(234234);
         }
         else
         {
-            f += Input.GetAxis("HorizontalP2") * projectedRight * 0.2f;
+            f += Input.GetAxis("HorizontalP2") * projectedRight * 2.4f;
         }
 
         return f;
@@ -179,7 +179,7 @@ public class stere : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         if (!canGo) { return; }
         frame = false;
