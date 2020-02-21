@@ -8,7 +8,8 @@ public class MAINMENU : MonoBehaviour
 
     public void LoadLevel()
     {
-        SceneManager.LoadScene("_Main");
+        //SceneManager.LoadScene("_Main");
+        SceneManager.LoadScene("Jono1");
         //StartCoroutine(LetTheBellRing());
     }
 
